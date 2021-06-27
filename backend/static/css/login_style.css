@@ -1,0 +1,34 @@
+body {
+    background-color: #200f21;
+    color: #e1e1e1;
+    height: 100%;
+}
+
+nav {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-left: 50px;
+    padding-right: 50px;
+}
+nav div {
+    width: 200px;
+}
+nav div ul {
+    display: flex;
+    flex-direction: row !important;
+    justify-content: space-evenly;
+}
+
+.container{
+    margin-top: 100px;
+}
+
+.form-control {
+    width: 60% !important;
+}
+.form-group {
+    display: flex;
+    align-items: center;
+}

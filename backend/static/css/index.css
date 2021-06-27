@@ -1,0 +1,48 @@
+.vertical-menu {
+    width: 280px;
+    height: 100vh;
+    background-color: grey;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: fixed;
+    padding: 20px;
+    border: 20px solid #f1f1f1;
+}
+nav {
+    height: 50px;
+    border-bottom: 1px solid grey;
+}
+.content {
+    min-height: 100vh;
+    padding-left: 250px;
+    padding-top: 100px;
+}
+.vertical-menu p {
+    border: 1px solid #eee;
+    color: #f1f1f1;
+    display: block;
+    padding: 12px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.vertical-menu p:hover {
+    background-color: #e3e3e3;
+    color:  black;
+}
+#presentation {
+    display: flex;
+    flex-direction: row;
+}
+
+.course {
+    display: flex;
+    justify-content: space-between;
+    height: 100px;
+}
+
+.course > * {
+    width: 300px;
+    margin: 0 10px 0 10px;
+}
