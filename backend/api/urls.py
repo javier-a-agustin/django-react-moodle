@@ -1,13 +1,13 @@
 from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
-from api.views import UserCreate, CoursesList, MyCoursesList, CoursePage
+from api.views import UserCreate, CoursesList, MyCoursesList, CoursePage, CustomAuthToken
 from rest_framework.authtoken import views
 
 urlpatterns = [
     # Users
     path("register/", UserCreate.as_view(), name='regisetr'),
-    path('login/', views.obtain_auth_token, name='login'),
+    path('login/', CustomAuthToken.as_view(), name='login'),
 
     # Generic
     path("courses/", CoursesList.as_view(), name='courses'),

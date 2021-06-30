@@ -47,7 +47,7 @@ export const AuthScreen = () => {
                         token: data['token']
                     }
                     dispatch({
-                        payload: payload,
+                        payload: data,
                         type: types.login
                     }, );
                 }   

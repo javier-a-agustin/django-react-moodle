@@ -33,6 +33,7 @@ export const Navbar = () => {
                 <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div className="navbar-nav ml-auto mr-5">
                     <button className="nav-link btn btn-link" onClick={ () => changeFocus('main') }>Home</button>                
+                    <button className="nav-link btn btn-link" onClick={ () => changeFocus('profile') }>{ user.username }</button>                
                     <button className="nav-link btn btn-link" onClick={ () => changeFocus('my-courses') }>My Courses</button>                
                     <button className="nav-link btn btn-link" onClick={ handleLogOut }>Logout</button>                
                 </div>
