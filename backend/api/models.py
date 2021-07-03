@@ -4,7 +4,7 @@ from django.contrib.auth.models import AbstractUser
 class User(AbstractUser, models.Model):
 
     profile_picture     = models.ImageField(upload_to="images/users", default="images/default.jpg")
-    github_url          = models.CharField(max_length=200)
+    github_username     = models.CharField(max_length=200, blank=True)
     email               = models.CharField(max_length=200)
     course              = models.ManyToManyField("api.Course", blank=True)
     task                = models.ManyToManyField("api.Task", blank=True)

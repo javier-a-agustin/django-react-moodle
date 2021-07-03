@@ -20,6 +20,12 @@ class UserSerializer(serializers.ModelSerializer):
         Token.objects.create(user=user)
         return user
 
+class UserProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('pk', 'username', 'email', 'profile_pic', 'github_url', 'is_student', 'is_teacher')
+        extra_kwargs = {'password': {'write_only': True}}
+
 class CourseSerializer(serializers.ModelSerializer):
     image_url = serializers.SerializerMethodField('get_image_url')
     registered = serializers.SerializerMethodField('get_user_status') 

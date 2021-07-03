@@ -3,9 +3,10 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
+from rest_framework.views import APIView
 
-from api.serializers import UserSerializer, CourseSerializer, DetailCourseSerializer
-from .models import Course
+from api.serializers import UserSerializer, CourseSerializer, DetailCourseSerializer, UserProfileSerializer
+from .models import Course, User
 
 import json 
 
@@ -17,6 +18,31 @@ class UserCreate(generics.CreateAPIView):
     authentication_classes = ()
     permission_classes = (AllowAny, )
     serializer_class = UserSerializer
+
+
+class UserProfile(APIView):
+    permission_classes = (IsAuthenticated, )
+    serializer_class = UserProfileSerializer
+
+    def get(self, request, *args, **kwargs):
+        token = request.headers.get('Authorization', None)
+        if token != None:
+            token = token.split(" ")
+            token = token[1].strip()
+            user = Token.objects.get(key=token).user
+            return Response({
+                    'user_id'           : user.pk
+                    , 'email'           : user.email
+                    , 'is_student'      : user.is_student
+                    , 'is_teacher'      : user.is_teacher
+                    , 'profile_picture' : user.profile_picture.url
+                    , 'github_username' : user.github_username
+                    , 'username'        : user.username
+            })
+        return Response({
+                'error' : "Bad input"
+        })
+
 
 class CoursesList(generics.ListCreateAPIView):
     queryset = Course.objects.all()
@@ -47,22 +73,3 @@ class CoursePage(generics.RetrieveAPIView):
     permission_classes = (AllowAny, )
     serializer_class = DetailCourseSerializer
     queryset = Course.objects.all()
-
-class CustomAuthToken(ObtainAuthToken):
-
-    def post(self, request, *args, **kwargs):
-        serializer = self.serializer_class(data=request.data,
-                                           context={'request': request})
-        serializer.is_valid(raise_exception=True)
-        user = serializer.validated_data['user']
-        token, created = Token.objects.get_or_create(user=user)
-        return Response({
-            'token'             : token.key
-            , 'user_id'         : user.pk
-            , 'email'           : user.email
-            , 'is_student'      : user.is_student
-            , 'is_teacher'      : user.is_teacher
-            , 'profile_picture' : user.profile_picture.url
-            , 'github_url'      : user.github_url
-            , 'username'        : user.username
-        })
