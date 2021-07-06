@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import User, Course, Task, File
+from rest_framework.authtoken.models import Token
 
 class UserSerializer(serializers.ModelSerializer):
 
@@ -23,8 +24,7 @@ class UserSerializer(serializers.ModelSerializer):
 class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('pk', 'username', 'email', 'profile_pic', 'github_url', 'is_student', 'is_teacher')
-        extra_kwargs = {'password': {'write_only': True}}
+        fields = ('pk', 'username', 'email', 'profile_picture', 'github_username', 'is_student', 'is_teacher')
 
 class CourseSerializer(serializers.ModelSerializer):
     image_url = serializers.SerializerMethodField('get_image_url')

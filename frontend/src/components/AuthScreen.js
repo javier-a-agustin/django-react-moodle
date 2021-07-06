@@ -36,16 +36,12 @@ export const AuthScreen = () => {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(loginValues)  
+                body: JSON.stringify(loginValues)  
             }
         ) 
             .then(response => response.json() 
             .then(data => {
                 if ('token' in data) {
-                    const payload = {
-                        name: loginValues.username,
-                        token: data['token']
-                    }
                     dispatch({
                         payload: data,
                         type: types.login

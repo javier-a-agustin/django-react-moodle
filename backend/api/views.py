@@ -43,6 +43,29 @@ class UserProfile(APIView):
                 'error' : "Bad input"
         })
 
+class UserImageProfile(APIView):
+    permission_classes = (IsAuthenticated, )
+    serializer_class = UserProfileSerializer
+
+    def post(self, request, *args, **kwargs):
+        token = request.headers.get('Authorization', None)
+        if token != None:
+            token = token.split(" ")
+            token = token[1].strip()
+            user = Token.objects.get(key=token).user
+            file = request.FILES.getlist('files')
+            print(file)
+
+            user.profile_picture = file
+            user.save()
+        return Response({
+                'error' : "Bad input"
+        })
+
+class ProfileView(generics.UpdateAPIView):
+    permission_classes = (IsAuthenticated,)
+    serializer_class = UserProfileSerializer
+    queryset = User.objects.all()
 
 class CoursesList(generics.ListCreateAPIView):
     queryset = Course.objects.all()
