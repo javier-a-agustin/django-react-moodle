@@ -19,6 +19,7 @@ export const CoursePage = () => {
 			})
 			.then(res => res.json())
 			.then(data => {
+				console.log(data);
 				setCourse(data);
 			})
 
@@ -39,12 +40,17 @@ export const CoursePage = () => {
 
 						{
 							course.task_list &&
-							course.task_list.map(task => {
+							course.task_list.map((task, index) => {
 								return (
-									<div className="card text-white bg-dark p-3 border border-white">
+									<div className="card text-white bg-dark p-3 border border-white" key={ index }>
 										<h4>{ task.date_from } - { task.date_to }</h4>
 
 										<div>{ task.description }</div>
+
+										{
+											task.files && 
+												<a href={ task.files.file } target="_blank">Download File</a>
+										}
 									</div>
 
 								)

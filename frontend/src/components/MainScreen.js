@@ -26,8 +26,7 @@ export const MainScreen = () => {
     }, [])
     
     return (
-        <div>
-            <h1>Home</h1>
+        <div style={{ height: "100vh" }} className="d-flex justify-content-center align-items-center">
 
             {
 

@@ -1,13 +1,13 @@
 from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
-from api.views import UserCreate, CoursesList, MyCoursesList, CoursePage, UserProfile, UserImageProfile, ProfileView
+from api.views import UserCreate, CoursesList, MyCoursesList, CoursePage, UserProfile, AuthToken, ProfileView
 from rest_framework.authtoken import views
 
 urlpatterns = [
     # Users
     path("register/", UserCreate.as_view(), name='register'),
-    path('login/', views.obtain_auth_token, name='login'),
+    path('login/', AuthToken.as_view(), name='login'),
     path('userprofile/', UserProfile.as_view(), name='userprofile'),
     path('userprofilepicture/<int:pk>', ProfileView.as_view(), name='userprofilepicture'),
 

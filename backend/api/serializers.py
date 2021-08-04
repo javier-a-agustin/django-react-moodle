@@ -50,7 +50,7 @@ class FileSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 class TaskSerializer(serializers.ModelSerializer):
-    files = FileSerializer(source='file_set', many=True)
+    files = FileSerializer(source='file')
 
     class Meta:
         model = Task

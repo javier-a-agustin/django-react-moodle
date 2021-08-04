@@ -3,7 +3,6 @@ import { AuthContext } from '../auth/AuthContext';
 
 export const Profile = () => {
 	const { user } = useContext( AuthContext );
-
 	const [profile, setProfile] = useState({});
 	const [repos, setRepos] = useState([]);
 	const [profileImage, setProfileImage] = useState({file: null});
@@ -26,21 +25,29 @@ export const Profile = () => {
             })
 	};
 
-	const getUserRepos = () => {
-			fetch(`https://api.github.com/users/${profile.github_username}/repos`)
-				.then(res => res.json())
-				.then(data => {
-					setRepos(data);
-					console.log("repos", repos);
-				})
-
-
+	const getUserRepos = (userName) => {
+		// Aca profile.github_username es undefined
+		fetch(`https://api.github.com/users/${userName}/repos`)
+			.then(res => res.json())
+			.then(data => {
+				setRepos(data);
+				console.log(data)
+			})
 	}
 
 	useEffect(() => {
 		getUserProfile();
-		getUserRepos();
+		// getUserRepos();
 	}, []);
+
+	useEffect(() => {
+		console.log(profile);
+		const userName = profile.github_username;
+		console.log("username", userName);
+		if (userName) {
+			getUserRepos(userName);
+		}
+	  }, [getUserProfile]);
 
 	const toggleEdit = () => {
 		setEdit(edit => ({
@@ -145,19 +152,50 @@ export const Profile = () => {
 							</div>
 						}
 					</div>
-					
-				</div>
 
-			{
-				repos &&
-				repos.map( repo => {
-					return (
-						<a className="card-text" href={ repo.html_url } target="_blank">
-							{ repo.name }
-							{/* html_url */}
-						</a> 
-				)})
-			}
+					{
+						repos && 
+						<table class="table">
+							<thead>
+								<tr>
+									<th scope="col">#</th>
+									<th scope="col">First</th>
+									<th scope="col">Last</th>
+									<th scope="col">Handle</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<th scope="row">1</th>
+									<td>Mark</td>
+									<td>Otto</td>
+									<td>@mdo</td>
+								</tr>
+								<tr>
+									<th scope="row">2</th>
+									<td>Jacob</td>
+									<td>Thornton</td>
+									<td>@fat</td>
+								</tr>
+								<tr>
+									<th scope="row">3</th>
+									<td>Larry</td>
+									<td>the Bird</td>
+									<td>@twitter</td>
+								</tr>
+							</tbody>
+						</table>
+					}
+					{
+						repos.map(repo => {
+							return (
+								<div>
+								<a  className="card-text" href={ repo.html_url }>{ repo.name }</a>
+								</div>
+							)
+						})
+					}
+				</div>
 			</div>
 		</div>
 

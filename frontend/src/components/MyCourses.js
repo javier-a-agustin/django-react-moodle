@@ -19,19 +19,24 @@ export const MyCourses = () => {
             .then(data => {
                 setCourses(data);
             })
-    }, [])
+        }, [])
     
     return (
-        <>
-            <h1>My Courses</h1>
+        <div style={{ height: "100vh" }} className="d-flex justify-content-center align-items-center">
 
             {
-
-                courses.map( (course, index) => (
-                    <MyCourse key={ index } data={ course }/>
-                ))
+                courses.length > 0 &&
+                    courses.map( (course, index) => (
+                        <MyCourse key={ index } data={ course }/>
+                    )
+                )
 
             }
-        </>
+            
+            {
+                courses.length == 0 &&
+                    <h3 style={{ color: "white" }}>You are not registered in any course</h3>
+            }
+        </div>
     )
 }
