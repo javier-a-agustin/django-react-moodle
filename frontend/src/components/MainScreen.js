@@ -18,7 +18,8 @@ export const MainScreen = () => {
             }})
             .then(res => res.json())
             .then(data => {
-                setCourses(data)
+                setCourses(data);
+                console.log(data);
             })
     }
     useEffect(() => {

@@ -9,7 +9,7 @@ export const Footer = () => {
                 <div className="col-6 ">
                     <div className="logo-part d-flex justify-content-center align-items-center">
                         <img src="http://www.articaonline.com/wp-content/uploads/2016/09/Moodle-1.png" className="w-50 logo-footer" alt="Footer img" />
-                        <p>7637 Laurel Dr. King Of Prussia, PA 19406</p>
+                        <p>Page created by Javier Fernandez as a learning app and not pretending to use and moodle branch.</p>
                     </div>
                 </div>
 

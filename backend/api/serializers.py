@@ -27,12 +27,13 @@ class UserProfileSerializer(serializers.ModelSerializer):
         fields = ('pk', 'username', 'email', 'profile_picture', 'github_username', 'is_student', 'is_teacher')
 
 class CourseSerializer(serializers.ModelSerializer):
-    image_url = serializers.SerializerMethodField('get_image_url')
-    registered = serializers.SerializerMethodField('get_user_status') 
+    image_url               = serializers.SerializerMethodField('get_image_url')
+    registered              = serializers.SerializerMethodField('get_user_status') 
+    students_registered     = serializers.SerializerMethodField('get_students_registered') 
 
     class Meta:
         model = Course
-        fields = ('id', 'name', 'description', 'max_number_students', 'image', 'image_url', 'registered')
+        fields = ('id', 'name', 'description', 'max_number_students', 'image', 'image_url', 'registered','students_registered')
 
     def get_image_url(self, obj): 
         return obj.image.url
@@ -43,6 +44,9 @@ class CourseSerializer(serializers.ModelSerializer):
             if course.name ==  obj.name:
                 return True
         return False
+    
+    def get_students_registered(self, obj):
+        return len(User.objects.filter(course=obj))
 
 class FileSerializer(serializers.ModelSerializer):
     class Meta:

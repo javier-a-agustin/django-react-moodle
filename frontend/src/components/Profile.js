@@ -32,12 +32,11 @@ export const Profile = () => {
 			.then(data => {
 				setRepos(data);
 				console.log(data)
-			})
+			}) 
 	}
 
 	useEffect(() => {
 		getUserProfile();
-		// getUserRepos();
 	}, []);
 
 	useEffect(() => {
@@ -47,7 +46,7 @@ export const Profile = () => {
 		if (userName) {
 			getUserRepos(userName);
 		}
-	  }, [getUserProfile]);
+	  }, [profile]);
 
 	const toggleEdit = () => {
 		setEdit(edit => ({
@@ -102,8 +101,14 @@ export const Profile = () => {
 		});
 	}
 
+	const simulateClick = () => {
+		console.log("Simulate click");
+		document.querySelector("#profile_picture").click();
+		
+	}
+
 	return (
-		<div className="container">
+		<div className="container" >
 			<div className="card text-white bg-dark mb-3" style={{  minWidth: '18rem'}}>
 				{
 					profile.error && <p className="card-text">Could not get the profile. Try again</p>
@@ -119,10 +124,18 @@ export const Profile = () => {
 						<p className="card-text">Teacher Profile</p>
 				}
 				
-				<div>
-					<img className="card-img-top w-25 form-control" src={ profile.profile_picture } alt="Card image cap"/>
+				<div className="d-flex justify-content-end">
+				{/* <input name="profile_picture" type="file" onChange={ handleChangePicture } /> */}
+					<input hidden name="profile_picture" id="profile_picture" type="file" onChange={ handleChangePicture } />
 					{
-						edit.value && <input name="profile_picture" type="file" onChange={ handleChangePicture } />
+						!edit.value && 
+							<img className="card-img-top" src={ profile.profile_picture } alt="Card image cap" style={{  width: '100px'}}/>
+					}
+
+					{
+						edit.value && 
+						// 
+						<img className="card-img-top" src={ profile.profile_picture } alt="Card image cap" style={{  width: '100px', cursor: "pointer"}} onClick={ simulateClick } />
 					}
 				</div>
 				<div className="card-body">
@@ -155,38 +168,43 @@ export const Profile = () => {
 
 					{
 						repos && 
-						<table class="table">
-							<thead>
-								<tr>
-									<th scope="col">#</th>
-									<th scope="col">First</th>
-									<th scope="col">Last</th>
-									<th scope="col">Handle</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<th scope="row">1</th>
-									<td>Mark</td>
-									<td>Otto</td>
-									<td>@mdo</td>
-								</tr>
-								<tr>
-									<th scope="row">2</th>
-									<td>Jacob</td>
-									<td>Thornton</td>
-									<td>@fat</td>
-								</tr>
-								<tr>
-									<th scope="row">3</th>
-									<td>Larry</td>
-									<td>the Bird</td>
-									<td>@twitter</td>
-								</tr>
-							</tbody>
-						</table>
+						<div class="table-responsive">
+							<table className="table" style={{  color: 'white'}}>
+								<thead>
+									<tr>
+										<th scope="col">#</th>
+										<th scope="col">Repo Name</th>
+										<th scope="col">Created at</th>
+										<th scope="col">Language</th>
+									</tr>
+								</thead>
+								<tbody>
+								{
+									repos.map((repo, i) => {
+										return (
+											<tr key={ i }>
+												<th scope="row">{ i }</th>
+												<td>										
+													<a className="card-text" target="_blank" href={ repo.html_url }>{ repo.name }</a>
+												</td>
+												<td>										
+													{ repo.created_at }
+												</td>
+												<td>	
+													{ repo.language }
+												</td>
+												
+											</tr>
+										)
+									})
+								}
+									
+		
+								</tbody>
+							</table>
+						</div>
 					}
-					{
+					{/* {
 						repos.map(repo => {
 							return (
 								<div>
@@ -194,7 +212,7 @@ export const Profile = () => {
 								</div>
 							)
 						})
-					}
+					} */}
 				</div>
 			</div>
 		</div>
